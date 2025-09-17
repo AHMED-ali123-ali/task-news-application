@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
+import '../model/articles.dart';
+import '../network/abi-service.dart';
 import 'farmer.dart';
 class sport extends StatefulWidget {
   const sport({super.key});
@@ -9,9 +11,44 @@ class sport extends StatefulWidget {
 }
 
 class _sportState extends State<sport> {
+  Api api = Api();
+
+  List<Articles>? article;
+
+  @override
+  void initState() {
+    getarticle();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  getarticle()async{
+
+    article= await api.getnews();
+
+    setState(() {
+
+    });
+
+  }
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return
+      article == null?
+      SliverToBoxAdapter(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ):
+      SliverToBoxAdapter(
+        child:
+      Column(
         crossAxisAlignment:CrossAxisAlignment.start,
         children: [
           Padding(
@@ -22,12 +59,12 @@ class _sportState extends State<sport> {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Image.network(
-                      'https://images.pexels.com/photos/209977/pexels-photo-209977.jpeg')),
+                      article![0].urlToImage ?? "")),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text('Tennis',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+            child: Text(article![0].title?? "",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
           ),
           InkWell(
             onTap: (){
@@ -40,12 +77,14 @@ class _sportState extends State<sport> {
               child: Text(
                 overflow: seview ? TextOverflow.visible:TextOverflow.ellipsis,
                 maxLines: seview? null: 2,
-                'Tennis courts witnessed intense competition today in an atmosphere full of excitement and energy.',style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold),),
+                article![0].description ?? "",style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold),),
             ),
           ),
         ],
-    );
-
+    )
+      );
   }
 }
+
+ */
 

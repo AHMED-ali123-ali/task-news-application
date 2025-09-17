@@ -1,13 +1,12 @@
 class Category {
   final String name;
   final String imageUrl;
-
   const Category({required this.name, required this.imageUrl});
 }
 
 List<Category> news = [
   Category(
-      name: 'General',
+     name: 'General',
       imageUrl: 'https://images.pexels.com/photos/29431460/pexels-photo-29431460.jpeg'),
   Category(
       name: 'Sports',

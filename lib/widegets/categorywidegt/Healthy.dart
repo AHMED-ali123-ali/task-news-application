@@ -1,53 +1,87 @@
 import 'package:flutter/material.dart';
 
-import '../farmer.dart';
-class helathy extends StatefulWidget {
-  const helathy({super.key});
+import '../../model/articles.dart';
+import '../../network/abi-service.dart';
+
+class Helathy extends StatefulWidget {
+  const Helathy({super.key});
 
   @override
-  State<helathy> createState() => _helathyState();
+  State<Helathy> createState() => _HelathyState();
 }
 
-class _helathyState extends State<helathy> {
+class _HelathyState extends State<Helathy> {
+  Api api = Api();
+  List<Articles>? article;
+  bool seview = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getArticle();
+  }
+
+  getArticle() async {
+    article = await api.getnews("general");
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment:CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: InkWell(
-            onTap: (){},
-            splashColor: Colors.orange,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: Image.network(
-                    'https://images.pexels.com/photos/576831/pexels-photo-576831.jpeg')),
+    return article == null
+        ? const SliverToBoxAdapter(
+      child: Center(child: CircularProgressIndicator()),
+    )
+        : SliverList.builder(
+          itemCount: article!.length,
+          itemBuilder: (context, index) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {},
+                  splashColor: Colors.orange,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Image.network(
+                      article![index].urlToImage ?? "",
+                      errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.broken_image, size: 80),
+                    ),
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  article![index].title,
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    seview = !seview;
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    article![index].description ?? "",
+                    overflow: seview
+                        ? TextOverflow.visible
+                        : TextOverflow.ellipsis,
+                    maxLines: seview ? null : 2,
+                    style: const TextStyle(
+                        fontSize: 19, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('Healthy',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
-        ),
-        InkWell(
-          onTap: (){
-            setState(() {
-              seview = !seview;
-            });
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal:20),
-            child: Text(
-              overflow: seview ? TextOverflow.visible:TextOverflow.ellipsis,
-              maxLines: seview? null: 2,
-    'Health research is rapidly advancing, focusing on prevention and improving quality of life.',style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold),),
-
-
-          ),
-        ),
-
-
-      ],
-    );
+        );
   }
 }
