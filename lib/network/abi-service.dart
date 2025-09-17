@@ -17,11 +17,13 @@ class Api {
    for (var item in json ['articles']){
      arictles.add(
        Articles(title:item['title'], description: item['description'], urlToImage:item['urlToImage'] , url: item['url'])
-                  );
+     );
    }
    return arictles;
     
   }
+
+
 
 }
 

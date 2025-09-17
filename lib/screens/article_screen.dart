@@ -10,6 +10,8 @@ class ArticleScreen extends StatefulWidget {
   State<ArticleScreen> createState() => _ArticleScreenState();
 }
 
+
+
 class _ArticleScreenState extends State<ArticleScreen> {
   List<Articles>? article;
   @override

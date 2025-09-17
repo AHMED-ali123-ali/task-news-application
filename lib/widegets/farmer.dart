@@ -63,6 +63,10 @@ class _farmerState extends State<farmer> {
           child: Text(article![1].title ?? "",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
         ),
 
+
+
+
+
         InkWell(
           onTap: (){
             setState(() {

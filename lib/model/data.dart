@@ -19,3 +19,5 @@ List<Category> news = [
       imageUrl:'https://images.pexels.com/photos/1172019/pexels-photo-1172019.jpeg'),
 
 ];
+
+
